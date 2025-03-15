@@ -1,12 +1,6 @@
-apiVersion: skaffold/v2alpha3
+apiVersion: skaffold/v4beta12
 kind: Config
-deploy:
-  kubectl:
-    manifests:
-      - infra/k8s/*
 build:
-  local:
-    push: false
   artifacts:
     - image: omerkanli/auth
       context: auth
@@ -16,3 +10,11 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
+  local:
+    push: false
+manifests:
+  rawYaml:
+    - infra/k8s/*.yaml
+
+deploy:
+  statusCheck: true
